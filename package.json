@@ -1,0 +1,25 @@
+{
+  "name": "arctouch-challenge-web",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/matheusmariano/arctouch-challenge-web",
+  "author": "Matheus Mariano <vmatheus.mariano@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "next": "^9.0.7",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
+  },
+  "scripts": {
+    "dev": "yarn next",
+    "build": "yarn next build",
+    "start": "yarn next start"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.11",
+    "@types/react": "^16.9.4",
+    "@types/react-dom": "^16.9.1",
+    "typescript": "^3.6.3"
+  }
+}
