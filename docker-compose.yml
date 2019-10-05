@@ -1,0 +1,12 @@
+version: '3.1'
+services:
+  web:
+    image: node:12-alpine
+    command: yarn dev
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    ports:
+      - ${PORT}:3000
+    env_file:
+      - .env

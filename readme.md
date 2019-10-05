@@ -1,11 +1,23 @@
 # Upcoming Movies Web App
 
 ## Requirements
-[Node](http://nodejs.org): 12
+[Docker](https://www.docker.com/): Latest Version
 
 ## Getting Started
-Run development server
+Copy `.env.example` to `.env` and change all environment variables you need.
+
+```
+cp .env.example .env
+```
+
+Install Node dependencies.
 
 ``` sh
-yarn dev
+docker-compose run --rm web yarn install
+```
+
+Run development server with Docker Compose.
+
+``` sh
+docker-compose up
 ```
