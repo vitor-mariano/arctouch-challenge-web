@@ -1,16 +1,28 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
-import { Column, Columns, Container, Title, Button } from 'bloomer';
+import { Column, Columns, Container, Title, Button, Field, Control, Input } from 'bloomer';
 import Page from '../components/Page';
 import MovieCard from '../components/MovieCard';
-import { getUpcomingMovies } from '../services/api';
+import { getUpcomingMovies, searchMovie } from '../services/api';
 import { formatDate } from '../services/filters';
 
 const Index = ({ movies }) => {
   const [list, setList] = useState(movies.results);
+  const [query, setQuery] = useState('');
+  const [searching, setSearching] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setLoading] = useState(false);
+
+  const loadUpcomingMovies = async () => {
+    setLoading(true);
+    setCurrentPage(1);
+
+    const response = await getUpcomingMovies();
+
+    setList(response.data.results);
+    setLoading(false);
+  };
 
   const showMovie = (id) => {
     Router.push({
@@ -32,6 +44,22 @@ const Index = ({ movies }) => {
     setLoading(false);
   };
 
+  const search = async (query) => {
+    setLoading(true);
+
+    const response = await searchMovie(query);
+
+    setSearching(true);
+    setList(response.data.results);
+    setLoading(false);
+  };
+
+  const clearSearch = () => {
+    setSearching(false);
+    setQuery('');
+    loadUpcomingMovies();
+  };
+
   return (
     <Page>
       <Head>
@@ -46,6 +74,43 @@ const Index = ({ movies }) => {
             >
               Upcoming Movies
             </Title>
+          </Column>
+        </Columns>
+        <Columns isCentered>
+          <Column>
+            <Field isGrouped style={{ justifyContent: 'center' }}>
+              <Control>
+                <Input
+                  isColor="primary"
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setQuery(event.target.value);
+                  }}
+                  placeholder="Search"
+                  value={query}
+                />
+              </Control>
+              <Control>
+                {
+                  !searching
+                  ? (
+                    <Button
+                      isColor="primary"
+                      onClick={() => search(query)}
+                    >
+                      Search
+                    </Button>
+                  )
+                  : (
+                    <Button
+                      isColor="primary"
+                      onClick={() => clearSearch()}
+                    >
+                      Clear
+                    </Button>
+                  )
+                }
+              </Control>
+            </Field>
           </Column>
         </Columns>
         <Columns isMultiline>
@@ -71,14 +136,16 @@ const Index = ({ movies }) => {
         </Columns>
         <Columns>
           <Column hasTextAlign="centered">
-            <Button
-              disabled={isLastPage()}
-              isColor="primary"
-              isLoading={isLoading}
-              onClick={loadNextPage}
-            >
-              Load more
-            </Button>
+            {!searching && (
+              <Button
+                disabled={isLastPage()}
+                isColor="primary"
+                isLoading={isLoading}
+                onClick={loadNextPage}
+              >
+                Load more
+              </Button>
+            )}
           </Column>
         </Columns>
       </Container>

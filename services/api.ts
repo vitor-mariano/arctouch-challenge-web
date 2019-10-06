@@ -12,3 +12,7 @@ export const getUpcomingMovies = (page: number = 1) => {
 export const getMovieById = (id: number) => {
   return request.get(`movie/${id}`);
 };
+
+export const searchMovie = (query: string) => {
+  return request.get(`movie/search?query=${query}`);
+};
