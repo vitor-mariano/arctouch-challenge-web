@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import {
   Card, CardContent, CardImage, Content, Image,
-  Media, MediaContent, Subtitle, Title,
+  Media, MediaContent, Title,
 } from 'bloomer';
 
 const MovieCard = ({ cover, genres, releaseDate, title }) => (

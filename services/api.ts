@@ -8,3 +8,7 @@ const request = axios.create({
 export const getUpcomingMovies = (page: number = 1) => {
   return request.get(`movie/upcoming?page=${page}`);
 };
+
+export const getMovieById = (id: number) => {
+  return request.get(`movie/${id}`);
+};
